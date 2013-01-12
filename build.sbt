@@ -1,4 +1,4 @@
-name := "lift-mongo-auth"
+name := "lift-mongo-multiauth"
 
 version := "0.0.1"
 
