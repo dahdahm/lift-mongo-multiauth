@@ -47,4 +47,19 @@ You can generate an IntelliJ project by running this command in sbt:
 
     sbt gen-idea
     
-Some available options are: no-classifiers no-sbt-classifiers.
+Some available options are:
+
+    no-classifiers
+    no-sbt-classifiers
+    
+To run this application you will need mongodb server installed and running.
+To install it on Ubuntu run:
+
+    sudo apt-get install mongodb
+    vim /etc/mongodb.conf  # uncomment port
+    service mongodb restart
+
+On Redhat/Fedora run:
+
+    sudo yum install mongodb-server mongodb
+    service mongod start
