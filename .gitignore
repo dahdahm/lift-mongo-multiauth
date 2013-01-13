@@ -46,7 +46,7 @@ Thumbs.db
 *.keep
 *.lock
 *.db
-
+.cache
 # Owls runtime data #
 #####################
 
