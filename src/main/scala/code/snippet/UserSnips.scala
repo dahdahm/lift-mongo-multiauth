@@ -164,15 +164,15 @@ class UserLogin extends StatefulSnippet with Loggable {
 object UserTopbar {
   def render = {
     User.currentUser match {
+
       case Full(user) =>
-        <ul class="nav secondary-nav" id="user">
-          <li class="dropdown" data-dropdown="dropdown">
-            <a href="#" class="dropdown-toggle">
+        <ul class="nav pull-right" id="user">
+          <li class="dropdown" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               {Gravatar.imgTag(user.email.is, 20)}
               <span>{user.username.is}</span>
             </a>
             <ul class="dropdown-menu">
-              <!--<li><lift:Menu.item name="User" donthide="true" linktoself="true">Profile</lift:Menu.item></li>-->
               <li><a href={"/user/%s".format(user.username.is)}>Profile</a></li>
               <li><lift:Menu.item name="Account" donthide="true" linktoself="true">Settings</lift:Menu.item></li>
               <li><lift:Menu.item name="About" donthide="true" linktoself="true">Help</lift:Menu.item></li>

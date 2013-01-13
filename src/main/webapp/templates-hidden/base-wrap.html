@@ -29,19 +29,30 @@
 
         <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
     
-		<div class="navbar navbar-fixed-top">
-		    <div class="navbar-inner">
-		        <div class="container">
-		            <a class="brand" href="/">lift-mongo-app</a>
-		            <div class="nav-collapse">
-		                <ul class="nav">
-		                    <span lift="GroupMenu?group=topbar;current_class=active"></span>
-		                </ul>
-		            </div>
-		            <span lift="UserTopbar"></span>
-		        </div>
-		    </div>
+		
+			<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="/">lift-mongo-app</a>
+				<div class="nav-collapse collapse">
+					<!-- create the 'main' menu items -->
+					<span data-lift="lift:TBNav.menuToTBNav?eager_eval=true"> <span
+						data-lift="lift:Menu.builder?top:class=nav;li_item:class=active;linkToSelf=true;expandAll=true;group=topbar"></span>
+					</span> 
+					<span class="nav pull-right"> <!-- create the 'user' (e.g. login/logout etc) menu items -->
+						<span data-lift="lift:TBNav.menuToTBNav?eager_eval=true"> 
+							<span data-lift="lift:Menu.builder?top:class=nav pull-right;li_item:class=active;linkToSelf=true;expandAll=true;group=user"></span>
+						</span>
+					 	<span lift="UserTopbar"></span>
+					</span>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
 		</div>
+	</div>
 
 		<div id="content" class="container"></div><!-- /container -->
 
