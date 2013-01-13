@@ -17,7 +17,7 @@ import util.Helpers._
  * Use for editing the currently logged in user only.
  */
 sealed trait BaseCurrentUserScreen extends BaseScreen {
-  object userVar extends ScreenVar(User.currentUser.open_!)
+  object userVar extends ScreenVar(User.currentUser.openOrThrowException("Current user does not exist anymore."))
 
   override def localSetup {
     Referer(Site.account.url)
