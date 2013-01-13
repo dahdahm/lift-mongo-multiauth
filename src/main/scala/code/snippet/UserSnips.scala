@@ -182,9 +182,14 @@ object UserTopbar {
           </li>
         </ul>
       case _ if (S.request.flatMap(_.location).map(_.name).filterNot(it => List("Login", "Register").contains(it)).isDefined) =>
-        <form action="/login" class="navbar-form pull-right">
-          <button class="btn-mini">Sign In</button>
+        <div>
+      	<form action="/signup" class="navbar-form pull-right">
+          <button class="btn btn-warning">Sign Up</button>
         </form>
+      	<form action="/login" class="navbar-form pull-right">
+          <button class="btn btn-primary ">Sign In</button>
+        </form>
+      	</div>
       case _ => NodeSeq.Empty
     }
   }
