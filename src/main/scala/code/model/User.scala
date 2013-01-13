@@ -19,7 +19,7 @@ class User private () extends ProtoAuthUser[User] with ObjectIdPk[User] {
   def meta = User
 
   def userIdAsString: String = id.toString
-
+  
   object locale extends LocaleField(this) {
     override def displayName = "Locale"
     override def defaultValue = "en_US"
@@ -55,11 +55,11 @@ class User private () extends ProtoAuthUser[User] with ObjectIdPk[User] {
    * FieldContainers for various LiftScreeens.
    */
   def accountScreenFields = new FieldContainer {
-    def allFields = List(username, email, locale, timezone)
+    def allFields = List(username, name, email, locale, timezone)
   }
 
   def profileScreenFields = new FieldContainer {
-    def allFields = List(name, location, bio)
+    def allFields = List(username, name, location, bio)
   }
 
   def registerScreenFields = new FieldContainer {
