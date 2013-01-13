@@ -44,7 +44,7 @@ object SmtpMailer extends Loggable {
             override def getPasswordAuthentication = new
               PasswordAuthentication(username, password)
           })
-          logger.info("SmtpMailer inited")
+          logger.info("SmtpMailer initialized.")
         case _ => logger.error("Username/password not supplied for Mailer.")
       }
     }

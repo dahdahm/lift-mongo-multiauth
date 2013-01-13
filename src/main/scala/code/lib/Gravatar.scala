@@ -22,7 +22,7 @@ object Gravatar extends Factory with Loggable {
   /**
    * @param email The email address of the recipient
    * @param size The square size of the output gravatar
-   * @param rating The rating of the Gravater, the default is G
+   * @param rating The rating of the Gravatar, the default is G
    * @param default The default image to return if none exists for the given email
    */
   def imageUrl(
@@ -55,9 +55,9 @@ object Gravatar extends Factory with Loggable {
     try {
       BigInt(1,md.digest(bytes)).toString(16)
     } catch {
-      case a: NoSuchAlgorithmException => logger.error("[Gravater] No Algorithm.", a); ""
-      case x: UnsupportedEncodingException => logger.warn("[Gravater] Unsupported Encoding.", x); ""
-      case _ => logger.warn("[Gravater] Unknown error."); ""
+      case a: NoSuchAlgorithmException => logger.error("[Gravatar] No Algorithm.", a); ""
+      case x: UnsupportedEncodingException => logger.warn("[Gravatar] Unsupported Encoding.", x); ""
+      case _ => logger.warn("[Gravatar] Unknown error."); ""
     }
   }
 }
