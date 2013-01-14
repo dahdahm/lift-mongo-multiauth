@@ -150,6 +150,7 @@ object User extends User with ProtoAuthUserMeta[User] with Loggable {
         |%s
       """.format(siteName, token.url, sysUsername).stripMargin
 
+    println("Email:" + user.fancyEmail )
     sendMail(
       From(MongoAuth.systemFancyEmail),
       Subject("%s Password Help".format(siteName)),

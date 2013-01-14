@@ -105,21 +105,14 @@ class UserLogin extends StatefulSnippet with Loggable {
   // form vars
   private var password = ""
   private var hasPassword = false
-  private var remember = User.loginCredentials.is.isRememberMe
+  private var remember = true
 
-  val radios = SHtml.radioElem[Boolean](
-    Seq(false, true),
-    Full(hasPassword)
-  )(it => it.foreach(hasPassword = _))
 
   def render = {
     "#id_email [value]" #> User.loginCredentials.is.email &
     "#id_password" #> SHtml.password(password, password = _) &
-    "#no_password" #> radios(0) &
-    "#yes_password" #> radios(1) &
     "name=remember" #> SHtml.checkbox(remember, remember = _) &
-    "#id_submit" #> SHtml.onSubmitUnit(process) &
-    "#id_cancel" #> SHtml.onSubmitUnit(cancel)
+    "#id_submit" #> SHtml.onSubmitUnit(process)
   }
 
   private def process(): Unit = S.param("email").map(e => {
@@ -158,7 +151,6 @@ class UserLogin extends StatefulSnippet with Loggable {
       S.error("Please enter an email address")
   }) openOr S.error("Please enter an email address")
 
-  private def cancel() = S.seeOther(Site.home.url)
 }
 
 object UserTopbar {
