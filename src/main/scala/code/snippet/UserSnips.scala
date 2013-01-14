@@ -104,7 +104,7 @@ class UserLogin extends StatefulSnippet with Loggable {
 
   // form vars
   private var password = ""
-  private var hasPassword = false
+  private var hasPassword = true
   private var remember = true
 
 
