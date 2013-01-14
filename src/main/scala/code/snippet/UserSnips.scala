@@ -173,7 +173,7 @@ object UserTopbar {
             </ul>
           </li>
         </ul>
-      case _ if (S.request.flatMap(_.location).map(_.name).filterNot(it => List("Login", "Register").contains(it)).isDefined) =>
+      case _ if (S.request.flatMap(_.location).map(_.name).filterNot(it => List("Login", "Register","Signup").contains(it)).isDefined) =>
         <div>
       	<form action="/signup" class="navbar-form pull-right">
           <button class="btn btn-warning">Sign Up</button>

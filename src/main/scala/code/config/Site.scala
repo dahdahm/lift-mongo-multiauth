@@ -45,6 +45,7 @@ object Site extends Locs {
   private def menus = List(
     home.menu,
     Menu.i("Login") / "login" >> RequireNotLoggedIn,
+    Menu.i("Signup") / "signup" >> RequireNotLoggedIn,
     register.menu,
     loginToken.menu,
     logout.menu,

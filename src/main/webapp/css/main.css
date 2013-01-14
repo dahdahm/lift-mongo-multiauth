@@ -4,13 +4,26 @@
    Author's custom styles
    ========================================================================== */
 
+#facebookButton {
+cursor: pointer;
+background: url('/img/facebook-button.png') 0 0 no-repeat;
+color: #fff;
+display: block;
+font-size: 17px;
+font-weight: bold;
+height: 61px;
+line-height: 58px;
+margin: 0 0 15px;
+text-indent: 70px;
+text-shadow: #000000 0 -1px 0;
+width: 302px;
+-webkit-text-stroke: 1px transparent;
+}
 
-
-
-
-
-
-
+.muted-link{
+	 color: #FFFFFF;
+    text-decoration: none;
+}
 
 
 
