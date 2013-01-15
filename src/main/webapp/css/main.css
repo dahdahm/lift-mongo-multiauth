@@ -25,11 +25,25 @@ width: 302px;
     text-decoration: none;
 }
 
-
-
-
-
-
-
-
-
+#facebookLoginButton {
+	background:
+		url('/img/facebook_signin_right.png')
+		top right no-repeat;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	float: right;
+	font: bold 11px/22px "Lucida Grande", Lucida, Arial, sans-serif;
+	height: 22px;
+	padding-right: 6px;
+	text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+	-webkit-text-stroke: 1px transparent;
+}
+#facebookLoginButtonLogo {
+background: url('/img/facebook_signin_left.png') top left no-repeat;
+display: block;
+float: left;
+height: 22px;
+padding-right: 5px;
+width: 24px;
+}

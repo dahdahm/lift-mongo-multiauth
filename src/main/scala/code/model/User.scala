@@ -20,6 +20,18 @@ class User private () extends ProtoAuthUser[User] with ObjectIdPk[User] {
 
   def userIdAsString: String = id.toString
   
+  object uid  extends StringField(this, 64) {
+  }
+  
+  object provider extends StringField(this, 64) {
+  }
+  
+  object oauthToken extends StringField(this, 255) {
+  }
+  
+  object secret extends StringField(this, 255) {
+  }
+  
   object locale extends LocaleField(this) {
     override def displayName = "Locale"
     override def defaultValue = "en_US"
@@ -77,6 +89,7 @@ object User extends User with ProtoAuthUserMeta[User] with Loggable {
   ensureIndex((email.name -> 1), true)
   ensureIndex((username.name -> 1), true)
 
+  def findByUID(in: String): Box[User] = find(uid.name, in)
   def findByEmail(in: String): Box[User] = find(email.name, in)
   def findByUsername(in: String): Box[User] = find(username.name, in)
 

@@ -1,3 +1,17 @@
 mail.smtp.host=smtp.gmail.com
 mail.smtp.user=
 mail.smtp.pass=
+
+omniauth.facebooksecret=SECRET
+omniauth.facebookkey=KEY
+omniauth.facebookpermissions=email,read_friendlists,read_stream  
+
+omniauth.twittersecret=SECRET
+omniauth.twitterkey=KEY
+omniauth.twitterpermissions=email,read_friendlists,read_stream  
+
+omniauth.githubsecret=SECRET
+omniauth.githubkey=KEY
+omniauth.githubpermissions=email,read_friendlists,read_stream  
+
+

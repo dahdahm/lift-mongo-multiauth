@@ -8,6 +8,8 @@ import common._
 import http.S
 import sitemap._
 import sitemap.Loc._
+import omniauth.Omniauth;
+import omniauth.lib._
 
 import net.liftmodules.mongoauth.Locs
 
@@ -20,8 +22,8 @@ object MenuGroups {
  * Wrapper for Menu locations
  */
 case class MenuLoc(menu: Menu) {
-  lazy val url: String = S.contextPath+menu.loc.calcDefaultHref
-  lazy val fullUrl: String = S.hostAndPath+menu.loc.calcDefaultHref
+  lazy val url: String = S.contextPath + menu.loc.calcDefaultHref
+  lazy val fullUrl: String = S.hostAndPath + menu.loc.calcDefaultHref
 }
 
 object Site extends Locs {
@@ -33,14 +35,14 @@ object Site extends Locs {
   val logout = MenuLoc(buildLogoutMenu)
   private val profileParamMenu = Menu.param[User]("User", "Profile",
     User.findByUsername _,
-    _.username.is
-  ) / "user" >> Loc.CalcValue(() => User.currentUser)
+    _.username.is) / "user" >> Loc.CalcValue(() => User.currentUser)
   lazy val profileLoc = profileParamMenu.toLoc
 
   val password = MenuLoc(Menu.i("Password") / "settings" / "password" >> RequireLoggedIn >> SettingsGroup)
   val account = MenuLoc(Menu.i("Account") / "settings" / "account" >> SettingsGroup >> RequireLoggedIn)
   val editProfile = MenuLoc(Menu("EditProfile", "Profile") / "settings" / "profile" >> SettingsGroup >> RequireLoggedIn)
   val register = MenuLoc(Menu.i("Register") / "register" >> RequireNotLoggedIn)
+  val processoauth = MenuLoc(Menu.i("processoauth") / "processoauth" >> RequireNotLoggedIn)
 
   private def menus = List(
     home.menu,
@@ -53,15 +55,22 @@ object Site extends Locs {
     account.menu,
     password.menu,
     editProfile.menu,
+    processoauth.menu,
     Menu.i("About") / "about" >> TopBarGroup,
     Menu.i("Contact") / "contact" >> TopBarGroup,
     Menu.i("Throw") / "throw" >> Hidden,
     Menu.i("Error") / "error" >> Hidden,
-    Menu.i("404") / "404" >> Hidden
-  )
+    Menu.i("404") / "404" >> Hidden) ::: Omniauth.sitemap
 
   /*
    * Return a SiteMap needed for Lift
    */
-  def siteMap: SiteMap = SiteMap(menus:_*)
+  def siteMap: SiteMap = SiteMap(menus: _*)
+  
+  /*
+   * Initialize omniauth.
+   */
+  Omniauth.init
+  Omniauth.siteAuthBaseUrl = """http://localhost:8080/"""
+  Omniauth.successRedirect = """http://localhost:8080/processoauth"""
 }

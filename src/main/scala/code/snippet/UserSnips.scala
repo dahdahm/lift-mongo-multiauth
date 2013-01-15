@@ -4,14 +4,13 @@ package snippet
 import config.Site
 import lib.{Gravatar, AppHelpers}
 import model.{User, LoginCredentials}
-
 import scala.xml._
-
 import net.liftweb._
 import common._
 import http.{DispatchSnippet, S, SHtml, StatefulSnippet}
 import util._
 import Helpers._
+import omniauth.Omniauth
 
 sealed trait UserSnippet extends DispatchSnippet with AppHelpers with Loggable {
 
@@ -38,7 +37,7 @@ sealed trait UserSnippet extends DispatchSnippet with AppHelpers with Loggable {
       <h3>{name(xhtml)}</h3>
     </div>
   }
-
+  
   def gravatar(xhtml: NodeSeq): NodeSeq = {
     val size = S.attr("size").map(toInt) openOr Gravatar.defaultSize.vend
 
@@ -96,6 +95,40 @@ object ProfileLocUser extends UserSnippet {
       "#id_editlink *" #> editLink
 
     cssSel.apply(xhtml)
+  }
+}
+
+class LogUserOauth {
+
+  def logUserIn(html: NodeSeq): NodeSeq = {
+
+    Omniauth.currentAuth match {
+      case Full(omni) => ({
+        val uid = omni.uid
+        
+        User.findByUID(uid) match {
+        case Full(user)  =>
+          User.logUserIn(user, true)
+          User.createExtSession(user.id.is)
+          S.seeOther(Site.home.url)
+        case _ => {
+            val user = User.createRecord
+            		.email(omni.email)
+            		.uid(omni.uid)
+            		.name(omni.name)
+            		.provider(omni.provider)
+            		.oauthToken(omni.token)
+            		.secret(omni.secret)
+            		.username(omni.nickName).save
+            User.logUserIn(user, true)
+            User.createExtSession(user.id.is)
+            S.seeOther(Site.home.url)
+            html
+        }
+      }
+      })
+      case _ => html
+    }
   }
 }
 
