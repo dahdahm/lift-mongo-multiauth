@@ -132,43 +132,20 @@ class LogUserOauth {
   }
 }
 
-class UserLogin extends StatefulSnippet with Loggable {
+class UserForgotPassword extends StatefulSnippet with Loggable {
   def dispatch = { case "render" => render }
-
-  // form vars
-  private var password = ""
-  private var hasPassword = true
-  private var remember = true
 
 
   def render = {
     "#id_email [value]" #> User.loginCredentials.is.email &
-    "#id_password" #> SHtml.password(password, password = _) &
-    "name=remember" #> SHtml.checkbox(remember, remember = _) &
     "#id_submit" #> SHtml.onSubmitUnit(process)
   }
 
   private def process(): Unit = S.param("email").map(e => {
     val email = e.toLowerCase.trim
-    // save the email and remember entered in the session var
-    User.loginCredentials(LoginCredentials(email, remember))
+    User.loginCredentials(LoginCredentials(email, true))
 
-    if (hasPassword && email.length > 0 && password.length > 0) {
-      User.findByEmail(email) match {
-        case Full(user) if (user.password.isMatch(password)) =>
-          User.logUserIn(user, true)
-          if (remember) User.createExtSession(user.id.is)
-          S.seeOther(Site.home.url)
-        case _ => S.error("Invalid credentials.")
-      }
-    }
-    else if (hasPassword && email.length <= 0 && password.length > 0)
-      S.error("Please enter an email.")
-    else if (hasPassword && password.length <= 0 && email.length > 0)
-      S.error("Please enter a password.")
-    else if (hasPassword)
-      S.error("Please enter an email and password.")
-    else if (email.length > 0) {
+    if (email.length > 0) {
       // see if email exists in the database
       User.findByEmail(email) match {
         case Full(user) => {
@@ -177,12 +154,47 @@ class UserLogin extends StatefulSnippet with Loggable {
           S.notice("An email has been sent to you with instructions for accessing your account.")
           S.seeOther(Site.home.url)
         }
-        case _ => S.seeOther(Site.register.url)
+        case _ =>  S.notice("Email address is not in our system. Are you sure you have the right email?")
       }
     }
     else
       S.error("Please enter an email address")
   }) openOr S.error("Please enter an email address")
+
+}
+
+class UserLogin extends StatefulSnippet with Loggable {
+  def dispatch = { case "render" => render }
+
+  private var password = ""
+
+    def render = {
+    "#id_email [value]" #> User.loginCredentials.is.email &
+    "#id_password" #> SHtml.password(password, password = _) &
+    "#id_submit" #> SHtml.onSubmitUnit(process)
+  }
+
+  private def process(): Unit = S.param("email").map(e => {
+    val email = e.toLowerCase.trim
+    // save the email and remember entered in the session var
+    User.loginCredentials(LoginCredentials(email, true))
+
+    if (email.length > 0 && password.length > 0) {
+      User.findByEmail(email) match {
+        case Full(user) if (user.password.isMatch(password)) =>
+          User.logUserIn(user, true)
+          User.createExtSession(user.id.is)
+          S.seeOther(Site.home.url)
+        case _ => S.error("Invalid credentials.")
+      }
+    }
+    else if (email.length <= 0 && password.length > 0)
+      S.error("Please enter an email address.")
+    else if (password.length <= 0 && email.length > 0)
+      S.error("Please enter a password.")
+    else
+      S.error("Please enter an email and password.")
+  }) openOr S.error("Please enter an email address.")
 
 }
 

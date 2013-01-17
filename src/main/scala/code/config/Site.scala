@@ -43,6 +43,7 @@ object Site extends Locs {
   val editProfile = MenuLoc(Menu("EditProfile", "Profile") / "settings" / "profile" >> SettingsGroup >> RequireLoggedIn)
   val register = MenuLoc(Menu.i("Register") / "register" >> RequireNotLoggedIn)
   val processoauth = MenuLoc(Menu.i("processoauth") / "processoauth" >> RequireNotLoggedIn)
+  val forgotPassword= MenuLoc(Menu.i("forgotPassword") / "forgotPassword" >> RequireNotLoggedIn)
 
   private def menus = List(
     home.menu,
@@ -56,6 +57,7 @@ object Site extends Locs {
     password.menu,
     editProfile.menu,
     processoauth.menu,
+    forgotPassword.menu,
     Menu.i("About") / "about" >> TopBarGroup,
     Menu.i("Contact") / "contact" >> TopBarGroup,
     Menu.i("Throw") / "throw" >> Hidden,
