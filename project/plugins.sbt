@@ -12,3 +12,9 @@ addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.2.0")
 
 //Enable the sbt eclipse plugin
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.1")
+
+//Enable the sbt LESS plugin
+addSbtPlugin("me.lessis" % "less-sbt" % "0.1.10")
+
+
+    

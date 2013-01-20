@@ -87,7 +87,8 @@ object ProfileLocUser extends UserSnippet {
         NodeSeq.Empty
 
     val cssSel =
-      "#id_avatar *" #> Gravatar.imgTag(user.email.is) &
+      "#id_avatar *" #> Gravatar.imgTag(  user.email.is) &
+      "#id_username *" #> <h3>{user.username.is}</h3> &
       "#id_name *" #> <h3>{user.name.is}</h3> &
       "#id_location *" #> user.location.is &
       "#id_whencreated" #> df.format(user.whenCreated.toDate).toString &
@@ -154,7 +155,7 @@ class UserForgotPassword extends StatefulSnippet with Loggable {
           S.notice("An email has been sent to you with instructions for accessing your account.")
           S.seeOther(Site.home.url)
         }
-        case _ =>  S.notice("Email address is not in our system. Are you sure you have the right email?")
+        case _ =>  S.notice("Email address is not in our system. Are you sure you have the right email?	")
       }
     }
     else

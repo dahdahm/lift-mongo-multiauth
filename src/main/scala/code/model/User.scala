@@ -167,6 +167,7 @@ object User extends User with ProtoAuthUserMeta[User] with Loggable {
     println("Email:" + user.fancyEmail)
     println("Message sent: " + msgTxt)
     println("**********************")
+    
     sendMail(
       From(MongoAuth.systemFancyEmail),
       Subject("%s Password Help".format(siteName)),

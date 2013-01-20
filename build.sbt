@@ -36,3 +36,13 @@ libraryDependencies ++= {
   )
 }
 
+seq(lessSettings:_*)
+
+(LessKeys.mini in (Compile, LessKeys.less)) := true
+
+(resourceManaged in (Compile, LessKeys.less)) <<= baseDirectory(_ /"src" / "main" / "webapp" / "css")
+
+(LessKeys.filter in (Compile, LessKeys.less)) := "styles.less"
+
+
+
